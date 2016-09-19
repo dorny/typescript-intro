@@ -31,27 +31,152 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    # TypeScript
+                    ## Modern Web Development with
+                    # [TypeScript](https://www.typescriptlang.org/)
 
                     Slides: [https://dorny.github.io/typescript-intro](https://dorny.github.io/typescript-intro/)
                 </script>
             </section>
 
+           <section data-markdown>
+                <script type="text/template">
+                    ## Why is JavaScript not sufficient?
+
+                    - Before:
+                        - Web pages
+
+                    - Now:
+                        - Web applications (SPA)
+                        - Server (Node.js)
+                        - Mobile (Cordova)
+                        - Desktop (Electron,UWP)
+                </script>
+            </section>
+
             <section data-markdown>
                 <script type="text/template">
-                    ## TypeScript Basic Course
+                    ## Why is JavaScript not sufficient?
+
+                    - Dynamically typed:
+                        - Poor autocomplete (IntelliSense) and navigation
+                        - Errors discovered at runtime
+                        - Refactoring is error prone
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Why is JavaScript not sufficient?
+
+                    ```js
+                        function DoSomethingImportant(book) {
+                            // What is the type of "book" ?
+                            // No autocomplete for you...
+                        }
+
+                        // ....
+
+                        var book = {
+                            author: 'John Doe'
+                            title: 'JavaScript daily WTF'
+                        };
+
+                        DoSomethingImporatnt(book);
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Why is JavaScript not sufficient?
+
+                    - Weird syntax/behavior (**fixed in es6**):
+                        - Lambdas
+                        - Classes
+                        - Rest Parameters
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## There are more than 250 "languages" that compile to JS
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Google Closure Tools
+
+                    ```js
+                    /**
+                    * @param {string} bar
+                    * @return {boolean}
+                    */
+                    function foo(bar) { return true; }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## CoffeeScript
+
+                    ```coffeescript
+                    # Conditions:
+                    number = -42 if opposite
+
+                    # Functions:
+                    square = (x) -> x * x
+
+                    # Objects:
+                    math =
+                    root:   Math.sqrt
+                    square: square
+                    cube:   (x) -> x * square x
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## [Flow](https://flowtype.org/)
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## TypeScript
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    # TypeScript
+                    ## Basic Course
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Basic Types
+
+                    * Boolean
+                    * Number
+                    * String
+                    * Array
+                    * Tupple
+                    * Enum
+                    * Any
+                    * Void
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Variable Declarations
+                    * var
+                    * let
+                    * const
                 </script>
             </section>
 
@@ -151,10 +276,25 @@
                 </script>
             </section>
 
+            <section data-markdown>
+                <script type="text/template">
+                    # TypeScript
+                    ## Development Setup
+                </script>
+            </section>
+
             <section>
                 <h3>Thanks</h3>
                 <!--<img class="logo" src="img/typescript-logo.svg" alt="TypeScript logo" width="50%" height="auto" />-->
                 <h3><a href="https://www.typescriptlang.org/">www.typescriptlang.org</a></h3>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## FUN :)
+
+                    [WAT @garybernhardt](https://www.destroyallsoftware.com/talks/wat)
+                </script>
             </section>
 
         </div>
