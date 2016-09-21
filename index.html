@@ -38,24 +38,26 @@
                 </script>
             </section>
 
-           <section data-markdown>
-                <script type="text/template">
-                    ## Why is JavaScript not sufficient?
+           <section>
+                <h2>Why is JavaScript not sufficient?</h2>
 
-                    - Before:
-                        - Web pages
+                <div class="fragment" data-markdown>
+                    <script type="text/template">
+                        - Before:
+                            - Web pages
 
-                    - Now:
-                        - Web applications (SPA)
-                        - Server (Node.js)
-                        - Mobile (Cordova)
-                        - Desktop (Electron,UWP)
-                </script>
+                        - Now:
+                            - Web applications (SPA)
+                            - Server (Node.js)
+                            - Mobile (Cordova)
+                            - Desktop (Electron,UWP)
+                    </script>
+                </div>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Why is JavaScript not sufficient?
+                    ## Why JavaScript not sufficient?
 
                     - Dynamically typed:
                         - Poor autocomplete (IntelliSense) and navigation
@@ -276,6 +278,25 @@
                     // It's possible to get string name of an enum variant
                     let colorName: string = Color[Color.Green]; // "Green"
                     let colorName: string = Color[0];           // "Red"
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Enum
+
+                    ``` typescript
+                    enum FileAccess {
+                        // constant members
+                        None,
+                        Read    = 1 << 1,
+                        Write   = 1 << 2,
+                        ReadWrite  = Read | Write,
+
+                        // computed member
+                        G = "123".length
+                    }
                     ```
                 </script>
             </section>
@@ -582,39 +603,9 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 </script>
             </section>
 
-            <section data-markdown>
-                <script type="text/template">
-                    ## Classes
-                </script>
-            </section>
-
             <section data-markdown>l
                 <script type="text/template">
                     ## Functions
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Generics
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Enums
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Type Inference
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Type Compatibility
                 </script>
             </section>
 
@@ -650,13 +641,25 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Iterators and Generators
+                    ## Classes
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Generics
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Modules
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Iterators and Generators
                 </script>
             </section>
 
