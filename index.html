@@ -422,6 +422,163 @@
             <section data-markdown>
                 <script type="text/template">
                     ## Interfaces
+
+                    One of TypeScript’s core principles is that type-checking focuses on the shape that values have.
+
+                    ```
+                    interface LabelledValue {
+                        label: string;
+                    }
+
+                    function printLabel(labelledObj: LabelledValue) {
+                        console.log(labelledObj.label);
+                    }
+
+                    let myObj = {size: 10, label: "Size 10 Object"};
+                    printLabel(myObj);
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Interfaces - Optional Properties
+
+                    ``` typescript
+                    interface SquareConfig {
+                        color?: string;
+                        width?: number;
+                    }
+
+                    function createSquare(config: SquareConfig) {
+                        let newSquare = {color: "white", area: 100};
+                        if (config.color) {
+                            newSquare.color = config.color;
+                        }
+                        if (config.width) {
+                            newSquare.area = config.width * config.width;
+                        }
+                        return newSquare;
+                    }
+
+                    let mySquare = createSquare({color: "black"});
+                    ```
+                </script>
+            </section>
+
+            <section>
+                <h2>Interfaces - Optional Properties</h2>
+
+                <pre><code data-trim data-noescape class="typescript">
+interface SquareConfig {
+    color?: string;
+    width?: number;
+}
+
+function createSquare(config: SquareConfig) {
+    // ...
+}
+
+let mySquare = createSquare({color: "black", <mark>widht</mark>: 50});
+                </code></pre>
+
+                Compile time error:
+
+                <pre><code data-trim data-noescape class="text">
+<mark>test.ts(17,47): error TS2345: Argument of type
+'{ color: string; widht: number; }'
+is not assignable to parameter of type 'SquareConfig'.
+Object literal may only specify known properties,
+and 'widht' does not exist in type 'SquareConfig'.</mark>
+                </code></pre>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Interfaces - Function Types
+
+                    ``` typescript
+                    interface SearchFunc {
+                        (source: string, subString: string): boolean;
+                    }
+
+                    let mySearch : SearchFunc;
+                    mySearch = (source: string, subString: string) => {
+                        // ...
+                        return true;
+                    };
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Interfaces - Indexable Types
+
+                    ``` typescript
+                    interface StringArray {
+                        [index: number]: string;
+                    }
+
+                    interface StringDictionary {
+                        [index: string]: string;
+                    }
+
+                    let stringArray: StringArray;
+                    stringArray = ["Bob", "Fred"];
+
+                    let stringDictionary : StringDictionary;
+                    stringDictionary = { "key": "value" };
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Interfaces - Class Constructors
+
+                    ``` typescript
+                    interface ClockConstructor {
+                        new (hour: number, minute: number): ClockInterface;
+                    }
+                    interface ClockInterface { }
+
+                    function createClock(
+                        ctor: ClockConstructor, hour: number, minute: number
+                    ): ClockInterface {
+                        return new ctor(hour, minute);
+                    }
+
+                    class DigitalClock implements ClockInterface {
+                        constructor(h: number, m: number) { }
+                    }
+                    class AnalogClock implements ClockInterface {
+                        constructor(h: number, m: number) { }
+                    }
+
+                    let digital = createClock(DigitalClock, 12, 17);
+                    let analog = createClock(AnalogClock, 7, 32);
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Extending Interfaces
+
+                    ``` typescript
+                    interface Shape {
+                        color: string;
+                    }
+
+                    interface Square extends Shape {
+                        sideLength: number;
+                    }
+
+                    function printSquare(square: Square) {
+                        console.log(`color: ${square.color}, length:${square.sideLength}`);
+                    }
+                    ```
                 </script>
             </section>
 
@@ -431,7 +588,7 @@
                 </script>
             </section>
 
-            <section data-markdown>
+            <section data-markdown>l
                 <script type="text/template">
                     ## Functions
                 </script>
