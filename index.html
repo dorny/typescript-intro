@@ -335,9 +335,87 @@
             <section data-markdown>
                 <script type="text/template">
                     ## Variable Declarations
-                    * var
-                    * let
-                    * const
+                    * `var` - function scope
+                    * `let` - block scope
+                    * `const` - block scope + value cannot be changed
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable capturing quirks
+
+                    What do you think will be written to the console?
+                    ``` typescript
+                    for (var i = 0; i < 5; i++) {
+                        setTimeout(function() {console.log(i); }, 100 * i);
+                    }
+                    ```
+
+                    Output: <!-- .element: class="fragment" data-fragment-index="1" -->
+                    ``` typescript
+                    5
+                    5
+                    5
+                    5
+                    5
+                    ```
+                    <!-- .element: class="fragment" data-fragment-index="1" -->
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable capturing quirks
+
+                    Using `let` fixes the issue.
+                    ``` typescript
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(function() {console.log(i); }, 100 * i);
+                    }
+                    ```
+
+                    Output:
+                    ``` typescript
+                    0
+                    1
+                    2
+                    3
+                    4
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Array destructuring
+
+                    ``` typescript
+                    let input = [1, 2, 3, 4];
+                    let [first, second, ...rest] = input;
+
+                    console.log(first);  // outputs 1
+                    console.log(second); // outputs 2
+                    console.log(rest);   // outputs [ 3, 4 ]
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Object destructuring
+
+                    ``` typescript
+                    let book = {
+                        title: "TypeScript for dummies",
+                        author: "John Doe",
+                        year: 2016
+                    };
+
+                    let {author, title: bookTitle} = book;
+                    console.log(author);    // "John Doe"
+                    console.log(bookTitle); // "TypeScript for dummies"
+                    ```
                 </script>
             </section>
 
