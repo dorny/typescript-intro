@@ -164,10 +164,171 @@
                     * Number
                     * String
                     * Array
-                    * Tupple
-                    * Enum
-                    * Any
-                    * Void
+                    * _Tuple_
+                    * _Enum_
+                    * _Any_
+                    * _Void_
+
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Boolean
+
+                    ``` typescript
+                    // Type is optionally specified after variable name
+                    let isDone: boolean = false;
+
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Number
+                    As in JavaScript, all numbers in TypeScript are floating point values.
+
+                    ``` typescript
+                    let decimal: number = 6;
+
+                    let hex: number = 0xf00d;
+
+                    let binary: number = 0b1010;
+
+                    let octal: number = 0o744;
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## String
+                    * both single `'` and double `"` quotes can be used.
+
+                    ``` typescript
+                    let color: string = "blue";
+                    color = 'red';
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Template Strings
+                    * can span multiple lines
+                    * can have embedded expressions
+
+                    ```typescript
+                    let fullName: string = `Bob Bobbington`;
+                    let sentence: string = `Hello, my name is ${ fullName }.
+
+                    let age: number = 37;
+                    I'll be ${ age + 1 } years old next month.`
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Array
+
+                    ``` typescript
+                    let list: number[] = [1, 2, 3];
+
+                    let list: Array<number> = [1, 2, 3];
+
+                    let first: number = list[0]
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Tuple
+
+                    ``` typescript
+                    // Declare a tuple type
+                    let x: [string, number];
+
+                    // Initialize it
+                    x = ["hello", 10]; // OK
+
+                    // Initialize it incorrectly
+                    x = [10, "hello"]; // Error
+
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Enum
+
+                    ``` typescript
+                    // By default, enums begin numbering their members starting at 0.
+                    // You can change this by manually setting the value of one of its members.
+                    enum Color {Red, Green, Blue = 4};
+
+                    // Store enum variant in a variable
+                    let c: Color = Color.Green;
+
+                    // It's possible to get string name of an enum variant
+                    let colorName: string = Color[Color.Green]; // "Green"
+                    let colorName: string = Color[0];           // "Red"
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown data-separator-notes="^Note:">
+                <script type="text/template">
+                    ## Any
+
+                    Using default compiler settings, all variables without type anotations are treated as `any`.
+
+                    ``` typescript
+                    let notSure: any = false;
+                    notSure = "maybe a string instead";
+                    notSure = 4;
+
+                    notSure.toFixed(); // okay, toFixed exists
+                                       // (but the compiler doesn't check)
+
+                    notSure.ifItExists(); // Runtime error
+                    ```
+
+                    Note:
+                    Object only allow you to assign any value to them – you can’t call arbitrary methods on them, even ones that actually exist.
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Void
+
+                    void is a little like the opposite of any: the absence of having any type at all.
+                    You may commonly see this as the return type of functions that do not return a value.
+
+                    ``` typescript
+                    function warnUser(): void {
+                        alert("This is my warning message");
+                    }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Type assertions
+
+                    Sometimes you’ll end up in a situation where you’ll know more about a value than TypeScript does.
+
+                    ``` typescript
+                    let someValue: any = "this is a string";
+
+                    let strLength: number = (someValue as string).length;
+                    let worksToo: number = (<string>someValue).length;
+                    ```
                 </script>
             </section>
 
