@@ -606,12 +606,92 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
             <section data-markdown>l
                 <script type="text/template">
                     ## Functions
+
+                    ``` typescript
+                    function buildName(name: string, name?: string): string {
+                        // ...
+                    }
+
+                    function buildName(name: string, name = "Smith"): string {
+                        // ...
+                    }
+
+                    function buildName(name: string, ...rest: string[]): string {
+                        // ...
+                    }
+
+                    // Lamda syntax
+                    let buildName: (stirng, string) => string;
+                    buildName = (first, last) => `${first} + ${last}`;
+                    ```
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Union Types
+
+                    A union type describes a value that can be one of several types.
+
+                    ``` typescript
+                    function padLeft(value: string, padding: string | number) {
+                        if (typeof padding === "number") {
+                            return Array(padding + 1).join(" ") + value;
+                        }
+                        if (typeof padding === "string") {
+                            return padding + value;
+                        }
+                        throw new Error(`Expected string or number, got '${padding}'.`);
+                    }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Intersection Types
+
+                    An intersection type have all members of all specified types.
+
+                    ``` typescript
+
+                    interface Entity {
+                        id: number;
+                    }
+
+                    interface Serializable {
+                        serialize(): string;
+                    }
+
+                    function store(entity: Entity & Serializable)
+                    {
+                        let storage = window.localStorage;
+                        let key = entity.id.toString();
+                        storage.setItem(key, entity.serialize());
+                    }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## String Literal Types
+
+                    String literal types allow you to specify the exact value a string must have.
+
+                    ``` typescript
+                    type Easing = "ease-in" | "ease-out" | "ease-in-out";
+
+                    class UIElement {
+                        animate(dx: number, dy: number, easing: Easing) {
+                            // ...
+                        }
+                    }
+
+                    let button = new UIElement();
+                    button.animate(0, 0, "ease-in");
+                    button.animate(0, 0, "uneasy"); // error: "uneasy" is not allowed here
+                    ```
                 </script>
             </section>
 
@@ -623,25 +703,13 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Intersection Types
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## String Literal Types
+                    ## Classes
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Polymorphic this types
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Classes
                 </script>
             </section>
 
@@ -654,6 +722,32 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
             <section data-markdown>
                 <script type="text/template">
                     ## Modules
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## `async` / `await`
+
+                    ``` typescript
+                    async function printDelayed(elements: string[]) {
+                        for (const element of elements) {
+                            await delay(200);
+                            console.log(element);
+                        }
+                    }
+
+                    async function delay(milliseconds: number) {
+                        return new Promise<void>(resolve => {
+                            setTimeout(() => resolve(), milliseconds);
+                        });
+                    }
+
+                    printDelayed(["Hello", "asynchronous", "world!"])
+                        .then(() => {
+                            console.log("Printed every element!");
+                        });
+                    ```
                 </script>
             </section>
 
