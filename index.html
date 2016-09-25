@@ -57,7 +57,7 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Why JavaScript not sufficient?
+                    ## Why is JavaScript not sufficient?
 
                     - Dynamically typed:
                         - Poor autocomplete (IntelliSense) and navigation
@@ -109,6 +109,9 @@
                 <script type="text/template">
                     ## Google Closure Tools
 
+                    * Used in: _Gmail_, _Google Docs_, _Google Maps_...
+                    * Optional type anotations in _JSDoc_ comments
+
                     ```js
                     /**
                     * @param {string} bar
@@ -148,6 +151,7 @@
             <section data-markdown>
                 <script type="text/template">
                     ## TypeScript
+
                 </script>
             </section>
 
@@ -697,19 +701,177 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
+                    ## Discriminated Unions
+
+                    * Common string literal property is used as discriminant
+
+                    ``` typescript
+                    interface Square {
+                        kind: "square";
+                        size: number;
+                    }
+                    interface Circle {
+                        kind: "circle";
+                        radius: number;
+                    }
+
+                    type Shape = Square | Circle;
+
+                    function area(s: Shape) {
+                        switch (s.kind) {
+                            case "square": return s.size * s.size;
+                            case "circle": return Math.PI * s.radius ** 2;
+                        }
+                    }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
                     ## Type Guards
+
+                    ``` typescript
+                    function isNumber(x: any): x is number {
+                        return typeof x === "number";
+                    }
+
+                    function isString(x: any): x is string {
+                        return typeof x === "string";
+                    }
+
+                    function padLeft(value: string, padding: string | number) {
+                        if (isNumber(padding)) {
+                            return Array(padding + 1).join(" ") + value;
+                        }
+                        if (isString(padding)) {
+                            return padding + value;
+                        }
+                        throw new Error(`Expected string or number, got '${padding}'.`);
+                    }
+                    ```
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Classes
+
+                    * Brings OOP to today's JavaScript
+                    * `abstract`
+                    * `extends` / `implements`
+                    * Access modifiers:
+                         - `public` (default)
+                         - `protected`
+                         - `private`
+                    * instance / static properties and methods
+                    * `readonly` properties
+                </script>
+            </section>
+
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Classes
+
+                    ``` typescript
+                    class Greeter {
+                        private greeting: string;
+
+                        constructor(message: string) {
+                            this.greeting = message;
+                        }
+
+                        greet() {
+                            return "Hello, " + this.greeting;
+                        }
+                    }
+
+                    let greeter = new Greeter("world");
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Classes
+
+                    ``` js
+                    var Greeter = (function () {
+
+                        function Greeter(message) {
+                            this.greeting = message;
+                        }
+
+                        Greeter.prototype.greet = function () {
+                            return "Hello, " + this.greeting;
+                        };
+
+                        return Greeter;
+                    }());
+
+                    var greeter = new Greeter("world");
+                    ```
+                </script>
+            </section>
+
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Classes
+
+                    ```
+                    class Animal {
+                        protected name: string;
+
+                        constructor(theName: string) {
+                            this.name = theName;
+                        }
+
+                        move(distanceInMeters: number = 0) {
+                            console.log(`${this.name} moved ${distanceInMeters}m.`);
+                        }
+                    }
+
+                    class Snake extends Animal {
+                        constructor(name: string) {
+                            super(name);
+                        }
+
+                        move(distanceInMeters = 5) {
+                            console.log("Slithering...");
+                            super.move(distanceInMeters);
+                        }
+                    }
+                    ```
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
                     ## Polymorphic this types
+
+                    ``` typescript
+                    class BasicCalculator {
+                        protected value: number = 0;
+                        public currentValue(): number {
+                            return this.value;
+                        }
+                        public add(operand: number): this {
+                            this.value += operand;
+                            return this;
+                        }
+                    }
+
+                    class ScientificCalculator extends BasicCalculator {
+                        public sin() {
+                            this.value = Math.sin(this.value);
+                            return this;
+                        }
+                    }
+
+                    let v = new ScientificCalculator().add(1).sin().currentValue();
+                    ```
                 </script>
             </section>
 
@@ -766,6 +928,26 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
             <section data-markdown>
                 <script type="text/template">
                     ## Mixins
+
+                    ``` typescript
+                    // Disposable Mixin
+                    class Disposable {
+                        isDisposed: boolean;
+                        dispose() {
+                            this.isDisposed = true;
+                        }
+                    }
+
+                    class SmartObject implements Disposable {
+
+                        // Disposable
+                        isDisposed: boolean = false;
+                        dispose: () => void;
+                    }
+
+                    // Custom function to copy methods from mixins to target class
+                    applyMixins(SmartObject, [Disposable]);
+                    ```
                 </script>
             </section>
 
