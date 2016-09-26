@@ -38,7 +38,7 @@
                 </script>
             </section>
 
-           <section>
+            <section>
                 <h2>Why is JavaScript not sufficient?</h2>
 
                 <div class="fragment" data-markdown>
@@ -172,18 +172,79 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Basic Types
-
-                    * Boolean
-                    * Number
-                    * String
-                    * Array
-                    * _Tuple_
-                    * _Enum_
-                    * _Any_
-                    * _Void_
-
+                    ## Variable Declarations
+                    * `var` - function scope
+                    * `let` - block scope
+                    * `const` - block scope + value cannot be changed
                 </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable capturing quirks
+
+                    What do you think will be written to the console?
+                    ``` typescript
+                    for (var i = 0; i < 5; i++) {
+                        setTimeout(function() {console.log(i); }, 100 * i);
+                    }
+                    ```
+
+                    Output: <!-- .element: class="fragment" data-fragment-index="1" -->
+                    ``` typescript
+                    5
+                    5
+                    5
+                    5
+                    5
+                    ```
+                    <!-- .element: class="fragment" data-fragment-index="1" -->
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable capturing quirks
+
+                    Using `let` fixes the issue.
+                    ``` typescript
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(function() {console.log(i); }, 100 * i);
+                    }
+                    ```
+
+                    Output:
+                    ``` typescript
+                    0
+                    1
+                    2
+                    3
+                    4
+                    ```
+                </script>
+            </section>
+
+            <section>
+                <h2>Basic Types</h2>
+                <div class="left" style="float:left;width:48%">
+                    <ul>
+                        <li>Boolean</li>
+                        <li>Number</li>
+                        <li>String</li>
+                        <li>Array</li>
+                        <li>Object</li>
+                        <li>Undefined</li>
+                    </ul>
+                </div>
+                <div class="right" style="float:right;width:48%">
+                    <ul>
+                        <li>Enum</li>
+                        <li>Tuple</li>
+                        <li>Any</li>
+                        <li>Void</li>
+                        <li>Never</li>
+                    </ul>
+                </div>
             </section>
 
             <section data-markdown>
@@ -259,18 +320,55 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Tuple
+                    ## Array destructuring
 
                     ``` typescript
-                    // Declare a tuple type
-                    let x: [string, number];
+                    let input = [1, 2, 3, 4];
+                    let [first, second, ...rest] = input;
 
-                    // Initialize it
-                    x = ["hello", 10]; // OK
+                    console.log(first);  // outputs 1
+                    console.log(second); // outputs 2
+                    console.log(rest);   // outputs [ 3, 4 ]
+                    ```
+                </script>
+            </section>
 
-                    // Initialize it incorrectly
-                    x = [10, "hello"]; // Error
+            <section data-markdown>
+                <script type="text/template">
+                    ## Object
 
+                    ``` typescript
+                    let book = {
+                        title: "TypeScript for dummies",
+                        author: "John Doe",
+                        year: 2016
+                    };
+
+                    console.log(book.author); // "John Doe"
+                    console.log(book.title);  // "TypeScript for dummies"
+
+                    let bookObject : Object = book;
+
+                    // Error: Property 'author' does not exist on type 'Object'.
+                    console.log(bookObject.author);
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Object destructuring
+
+                    ``` typescript
+                    let book = {
+                        title: "TypeScript for dummies",
+                        author: "John Doe",
+                        year: 2016
+                    };
+
+                    let {author, title: bookTitle} = book;
+                    console.log(author);    // "John Doe"
+                    console.log(bookTitle); // "TypeScript for dummies"
                     ```
                 </script>
             </section>
@@ -308,6 +406,24 @@
                         // computed member
                         G = "123".length
                     }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Tuple
+
+                    ``` typescript
+                    // Declare a tuple type
+                    let x: [string, number];
+
+                    // Initialize it
+                    x = ["hello", 10]; // OK
+
+                    // Initialize it incorrectly
+                    x = [10, "hello"]; // Error
+
                     ```
                 </script>
             </section>
@@ -351,102 +467,50 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Type assertions
+                    ## Never
 
-                    Sometimes you’ll end up in a situation where you’ll know more about a value than TypeScript does.
+                    Represents the type of values that never occur.
 
                     ``` typescript
-                    let someValue: any = "this is a string";
+                    // Function returning never must have unreachable end point
+                    function error(message: string): never {
+                        throw new Error(message);
+                    }
 
-                    let strLength: number = (someValue as string).length;
-                    let worksToo: number = (<string>someValue).length;
-                    ```
-                </script>
-            </section>
+                    // Inferred return type is never
+                    function fail() {
+                        return error("Something failed");
+                    }
 
-            <section data-markdown>
-                <script type="text/template">
-                    ## Variable Declarations
-                    * `var` - function scope
-                    * `let` - block scope
-                    * `const` - block scope + value cannot be changed
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Variable capturing quirks
-
-                    What do you think will be written to the console?
-                    ``` typescript
-                    for (var i = 0; i < 5; i++) {
-                        setTimeout(function() {console.log(i); }, 100 * i);
+                    // Function returning never must have unreachable end point
+                    function infiniteLoop(): never {
+                        while (true) { }
                     }
                     ```
-
-                    Output: <!-- .element: class="fragment" data-fragment-index="1" -->
-                    ``` typescript
-                    5
-                    5
-                    5
-                    5
-                    5
-                    ```
-                    <!-- .element: class="fragment" data-fragment-index="1" -->
                 </script>
             </section>
 
+
             <section data-markdown>
                 <script type="text/template">
-                    ## Variable capturing quirks
+                    ## Functions
 
-                    Using `let` fixes the issue.
                     ``` typescript
-                    for (let i = 0; i < 5; i++) {
-                        setTimeout(function() {console.log(i); }, 100 * i);
+                    function buildName(name: string, name?: string): string {
+                        // ...
                     }
-                    ```
 
-                    Output:
-                    ``` typescript
-                    0
-                    1
-                    2
-                    3
-                    4
-                    ```
-                </script>
-            </section>
+                    function buildName(name: string, name = "Smith"): string {
+                        // ...
+                    }
 
-            <section data-markdown>
-                <script type="text/template">
-                    ## Array destructuring
+                    function buildName(name: string, ...rest: string[]): string {
+                        // ...
+                    }
 
-                    ``` typescript
-                    let input = [1, 2, 3, 4];
-                    let [first, second, ...rest] = input;
-
-                    console.log(first);  // outputs 1
-                    console.log(second); // outputs 2
-                    console.log(rest);   // outputs [ 3, 4 ]
-                    ```
-                </script>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Object destructuring
-
-                    ``` typescript
-                    let book = {
-                        title: "TypeScript for dummies",
-                        author: "John Doe",
-                        year: 2016
-                    };
-
-                    let {author, title: bookTitle} = book;
-                    console.log(author);    // "John Doe"
-                    console.log(bookTitle); // "TypeScript for dummies"
+                    // Lamda syntax
+                    let buildName: (stirng, string) => string;
+                    buildName = (first, last) => `${first} + ${last}`;
                     ```
                 </script>
             </section>
@@ -614,30 +678,6 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 </script>
             </section>
 
-            <section data-markdown>l
-                <script type="text/template">
-                    ## Functions
-
-                    ``` typescript
-                    function buildName(name: string, name?: string): string {
-                        // ...
-                    }
-
-                    function buildName(name: string, name = "Smith"): string {
-                        // ...
-                    }
-
-                    function buildName(name: string, ...rest: string[]): string {
-                        // ...
-                    }
-
-                    // Lamda syntax
-                    let buildName: (stirng, string) => string;
-                    buildName = (first, last) => `${first} + ${last}`;
-                    ```
-                </script>
-            </section>
-
             <section data-markdown>
                 <script type="text/template">
                     ## Union Types
@@ -736,6 +776,21 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
+                    ## Type assertions
+
+                    Sometimes you’ll end up in a situation where you’ll know more about a value than TypeScript does.
+
+                    ``` typescript
+                    let someValue: any = "this is a string";
+
+                    let strLength: number = (someValue as string).length;
+                    let worksToo: number = (<string>someValue).length;
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
                     ## Type Guards
 
                     ``` typescript
@@ -821,7 +876,6 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                     ```
                 </script>
             </section>
-
 
             <section data-markdown>
                 <script type="text/template">
