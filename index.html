@@ -181,6 +181,87 @@
 
             <section data-markdown>
                 <script type="text/template">
+                    ## Variable Declarations
+
+                    ``` typescript
+                    "use strict";
+
+                    (function() {
+                        // `var` variables are valid in whole function scope.
+                        // Doesn't matter where they are declared.
+                        foo = true;
+                        var foo;
+
+                        if (foo) {
+                            let bar = true;
+
+                            const foobar = 3;
+
+                            // Error: Left-hand side of assignment cannot be a constant
+                            /* foobar = 4; */
+                        }
+
+                        // Error: Cannot find name 'bar'
+                        /* console.log(bar); */
+                    }());
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable Declarations
+
+                    What do you think will be written to the console?
+
+                    ``` typescript
+                    for (var i = 0; i<3; i++) {
+                        for (var i = 0; i<3; i++) {
+                            console.log(i);
+                        }
+                    }
+                    ```
+
+                    Output: <!-- .element: class="fragment" data-fragment-index="1" -->
+                    ``` typescript
+                    0
+                    1
+                    2
+                    ```
+                    <!-- .element: class="fragment" data-fragment-index="1" -->
+                    </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Variable Declarations
+
+                    Using `let` fixes the issue.
+                    ``` typescript
+                    for (let i = 0; i<3; i++) {
+                        for (let i = 0; i<3; i++) {
+                            console.log(i);
+                        }
+                    }
+                    ```
+
+                    Output:
+                    ``` typescript
+                    0
+                    1
+                    2
+                    0
+                    1
+                    2
+                    0
+                    1
+                    2
+                    ```
+                    </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
                     ## Variable capturing quirks
 
                     What do you think will be written to the console?
