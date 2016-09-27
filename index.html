@@ -600,9 +600,10 @@
                 <script type="text/template">
                     ## TypeScript in Depth
                     * Interfaces
+                    * Generics
                     * Union & Intersection types
                     * Classes
-                    * Namespaces & Modules
+                    * Modules
                 </script>
             </section>
 
@@ -772,6 +773,14 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
+                    ## Generics
+
+                    // TODO
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
                     ## Union Types
 
                     A union type describes a value that can be one of several types.
@@ -806,8 +815,7 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                         serialize(): string;
                     }
 
-                    function store(entity: Entity & Serializable)
-                    {
+                    function store(entity: Entity & Serializable) {
                         let storage = window.localStorage;
                         let key = entity.id.toString();
                         storage.setItem(key, entity.serialize());
@@ -1030,13 +1038,77 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Generics
+                    ## Modules
+
+                    * Starting with ES6, JavaScript has a concept of modules, TypeScript shares this concept
+                    * Modules are executed within their own scope
+                    * Modules are declarative, the relationships are specified as imports and exports at the file level
+                    * Modules import one another using a module loader
+                    * Any file containing a top-level `import` or `export` is considered a module
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Namespaces & Modules
+                    ## Modules - Export
+
+                    Any declaration (variable, function, class, type alias, or interface) can be exported by `export` keyword.
+
+                    ``` typescript
+                    /* Validators.ts */
+
+                    export interface StringValidator {
+                        isAcceptable(s: string): boolean;
+                    }
+
+                    export default function Validate(
+                            value: string, validator: StringValidator) : bool {
+                        // ...
+                    }
+                    ```
+
+                    ``` typescript
+                    /* ZipCodeValidator.ts */
+
+                    export const NumberRegexp = /^[0-9]+$/;
+                    export default sclass ZipCodeValidator implements StringValidator {
+                        isAcceptable(s: string) {
+                            return s.length === 5 && NumberRegexp.test(s);
+                        }
+                    }
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Modules - Import
+
+                    ``` typescript
+
+                    ```
+                </script>
+            </section>
+
+
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Modules - Code Generation
+
+                    ``` js
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Namespaces
+
+                    * Takes place of older concept of "Internal Modules"
+                    * It's different concept of code organization than modules
+                    * Exporting a namespace from your module is an example of adding too many layers of nesting
+                    * Can be useful for ambient declarations of some external libraries
                 </script>
             </section>
 
