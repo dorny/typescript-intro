@@ -1125,10 +1125,47 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 <script type="text/template">
                     ## Modules - Code Generation
 
-                    // TODO
+                    ``` typescript
+                    /* SimpleModule.ts */
+                    import m = require("mod");
+                    export let t = m.something + 1;
+                    ```
 
-                    ``` js
+                    ``` javascript
+                    /* AMD / RequireJS SimpleModule.js */
+                    define(["require", "exports", "./mod"],
+                            function (require, exports, mod_1) {
+                        exports.t = mod_1.something + 1;
+                    });
+                    ```
 
+                    ``` javascript
+                    /* CommonJS / Node SimpleModule.js */
+                    var mod_1 = require("./mod");
+                    exports.t = mod_1.something + 1;
+                    ```
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Modules - Code Generation
+
+                    ``` javascript
+                    /* UMD SimpleModule.js */
+                    (function (factory) {
+                        if (typeof module === "object"
+                                && typeof module.exports === "object") {
+                            var v = factory(require, exports);
+                            if (v !== undefined) module.exports = v;
+                        }
+                        else if (typeof define === "function" && define.amd) {
+                            define(["require", "exports", "./mod"], factory);
+                        }
+                    })(function (require, exports) {
+                        var mod_1 = require("./mod");
+                        exports.t = mod_1.something + 1;
+                    });
                     ```
                 </script>
             </section>
@@ -1184,15 +1221,47 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 <script type="text/template">
                     ## Decorators
 
-                    // TODO
+                     Decorators provide a way to add annotations and a meta-programming syntax for class declarations and members
+
+                     ``` typescript
+                    @sealed
+                    class Greeter {
+                        greeting: string;
+                        constructor(message: string) {
+                            this.greeting = message;
+                        }
+                        greet() {
+                            return "Hello, " + this.greeting;
+                        }
+                    }
+
+                    function sealed(constructor: Function) {
+                        Object.seal(constructor);
+                        Object.seal(constructor.prototype);
+                    }
+                     ```
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## JSX
+                    ## JSX React integration
 
-                    // TODO
+                    ``` typescript
+                    /// <reference path="react.d.ts" />
+
+                    interface Props {
+                        foo: string;
+                    }
+
+                    class MyComponent extends React.Component<Props, {}> {
+                        render() {
+                            return <span>{this.props.foo}</span>
+                        }
+                    }
+
+                    <MyComponent foo="bar" />;
+                    ```
                 </script>
             </section>
 
