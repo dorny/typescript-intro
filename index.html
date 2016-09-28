@@ -39,14 +39,14 @@
             </section>
 
             <section>
-                <h2>Why is JavaScript not sufficient?</h2>
+                <h2>Why is plain JavaScript not sufficient itself?</h2>
 
                 <div class="fragment" data-markdown>
                     <script type="text/template">
-                        - Before:
+                        - **Before**:
                             - Web pages
 
-                        - Now:
+                        - **Now**:
                             - Web applications (SPA)
                             - Server (Node.js)
                             - Mobile (Cordova)
@@ -57,7 +57,7 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Why is JavaScript not sufficient?
+                    ## Why is plain JavaScript not sufficient itself?
 
                     - Dynamically typed:
                         - Poor autocomplete (IntelliSense) and navigation
@@ -68,35 +68,47 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Why is JavaScript not sufficient?
+                    ## Why is JavaScript not sufficient itself?
 
                     ```js
-                        function DoSomethingImportant(book) {
-                            // What is the type of "book" ?
-                            // No autocomplete for you...
-                        }
+                    function DoSomethingImportant(book) {
+                        // What is the type of "book" ?
+                        // No autocomplete for you...
+                    }
 
-                        // ....
+                    // ....
 
-                        var book = {
-                            author: 'John Doe'
-                            title: 'JavaScript daily WTF'
-                        };
+                    var book = {
+                        author: 'John Doe'
+                        title: 'JavaScript daily WTF'
+                    };
 
-                        DoSomethingImporatnt(book);
+                    DoSomethingImporatnt(book);
                     ```
                 </script>
             </section>
 
             <section data-markdown>
                 <script type="text/template">
-                    ## Why is JavaScript not sufficient?
+                    ## Why is JavaScript not sufficient itself?
 
                     - Weird syntax/behavior (**fixed in es6**):
                         - Classes
                         - Lambdas
                         - Scope of `var` variables
                         - Rest Parameters
+                </script>
+            </section>
+
+            <section data-markdown>
+                <script type="text/template">
+                    ## Why using type annotations?
+
+                    * Can make code more readable
+                    * Can make code easier to analyse
+                    * Can allow for reliable refactoring
+                    * Can allow for generally better IDE support
+                    * Can catch some (type related) errors early
                 </script>
             </section>
 
@@ -145,7 +157,15 @@
 
             <section data-markdown>
                 <script type="text/template">
-                    ## [Flow](https://flowtype.org/)
+                    ## Flow
+
+                    ### Static type checker for JavaScript
+
+                    * Developed and maintained by Facebook
+                    * Optional type annotations
+                    * _Babel_ is used to transpile code to plain JavaScript
+                    * Easy to use on existing JavaScript project
+                    * IDE support & tools not as mature as for TypeScript
                 </script>
             </section>
 
@@ -1084,15 +1104,22 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 <script type="text/template">
                     ## Modules - Import
 
-                    // TODO
-
                     ``` typescript
+                    // Import named exports
+                    import { ZipCodeValidator, NumberRegexp } from "./ZipCodeValidator";
 
+                    // Rename imported item
+                    import { ZipCodeValidator as zcv } from "./ZipCodeValidator";
+
+                    // Import the entire module into a single variable
+                    import * as validator from "./ZipCodeValidator";
+                    let myValidator = new validator.ZipCodeValidator();
+
+                    // Import `export default` item
+                    import validate from "./Validators";
                     ```
                 </script>
             </section>
-
-
 
             <section data-markdown>
                 <script type="text/template">
