@@ -795,7 +795,28 @@ and 'widht' does not exist in type 'SquareConfig'.</mark>
                 <script type="text/template">
                     ## Generics
 
-                    // TODO
+                    ``` typescript
+                    // Generic function
+                    function identity<T>(arg: T): T {
+                       return arg;
+                    }
+
+                    interface ToString {
+                        ToString() : string;
+                    }
+
+                    // Generic class
+                    class GenericGreeter<T extends ToString> {
+                        private message: T;
+                        constructor(message: T) {
+                            this.message = message;
+                        }
+
+                        Greet() {
+                            console.log(this.message.ToString());
+                        }
+                    }
+                    ```
                 </script>
             </section>
 
