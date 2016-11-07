@@ -397,9 +397,9 @@
 
                     ```typescript
                     let fullName: string = `Bob Bobbington`;
+                    let age: number = 37;
                     let sentence: string = `Hello, my name is ${ fullName }.
 
-                    let age: number = 37;
                     I'll be ${ age + 1 } years old next month.`
                     ```
                 </script>
@@ -597,20 +597,20 @@
                     ## Functions
 
                     ``` typescript
-                    function buildName(name: string, name?: string): string {
+                    function buildName(first: string, last?: string): string {
                         // ...
                     }
 
-                    function buildName(name: string, name = "Smith"): string {
+                    function buildName(first: string, last = "Smith"): string {
                         // ...
                     }
 
-                    function buildName(name: string, ...rest: string[]): string {
+                    function buildName(first: string, ...rest: string[]): string {
                         // ...
                     }
 
                     // Lamda syntax
-                    let buildName: (stirng, string) => string;
+                    let buildName: (string, string) => string;
                     buildName = (first, last) => `${first} + ${last}`;
                     ```
                 </script>
